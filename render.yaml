@@ -1,0 +1,31 @@
+services:
+  - type: web
+    name: mcp-registry
+    runtime: docker
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: MCP_REGISTRY_DATABASE_URL
+        fromDatabase:
+          name: mcp-registry-db
+          property: connectionString
+      - key: MCP_REGISTRY_ENVIRONMENT
+        value: production
+      - key: MCP_REGISTRY_SEED_FROM
+        value: /app/data/seed.json
+      - key: MCP_REGISTRY_ENABLE_REGISTRY_VALIDATION
+        value: "false"
+      - key: MCP_REGISTRY_ENABLE_ANONYMOUS_AUTH
+        value: "false"
+      - key: MCP_REGISTRY_GITHUB_CLIENT_ID
+        sync: false
+      - key: MCP_REGISTRY_GITHUB_CLIENT_SECRET
+        sync: false
+      - key: MCP_REGISTRY_JWT_PRIVATE_KEY
+        sync: false
+
+databases:
+  - name: mcp-registry-db
+    plan: free
+    databaseName: mcp-registry
+    user: mcpregistry
