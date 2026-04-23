@@ -15,6 +15,8 @@ services:
         value: /app/data/seed.json
       - key: MCP_REGISTRY_ENABLE_REGISTRY_VALIDATION
         value: "false"
+      - key: MCP_REGISTRY_SERVER_ADDRESS
+        value: ":10000"
       - key: MCP_REGISTRY_ENABLE_ANONYMOUS_AUTH
         value: "false"
       - key: MCP_REGISTRY_JWT_PRIVATE_KEY
