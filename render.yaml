@@ -3,7 +3,6 @@ services:
     name: mcp-registry
     runtime: docker
     plan: free
-    healthCheckPath: /health
     envVars:
       - key: MCP_REGISTRY_DATABASE_URL
         fromDatabase:
