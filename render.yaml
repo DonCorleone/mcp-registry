@@ -17,12 +17,6 @@ services:
         value: "false"
       - key: MCP_REGISTRY_ENABLE_ANONYMOUS_AUTH
         value: "false"
-      - key: MCP_REGISTRY_GITHUB_CLIENT_ID
-        sync: false
-      - key: MCP_REGISTRY_GITHUB_CLIENT_SECRET
-        sync: false
-      - key: MCP_REGISTRY_JWT_PRIVATE_KEY
-        sync: false
 
 databases:
   - name: mcp-registry-db
