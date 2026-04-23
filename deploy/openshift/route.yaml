@@ -1,0 +1,16 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: mcp-registry
+  namespace: mcp-registry  # Anpassen falls anderer Namespace
+spec:
+  # Anpassen: gewünschte externe URL (OpenShift generiert sonst automatisch eine)
+  # host: mcp-registry.apps.your-cluster.company.com
+  to:
+    kind: Service
+    name: mcp-registry
+  port:
+    targetPort: 8080
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect

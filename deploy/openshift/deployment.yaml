@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mcp-registry
+  namespace: mcp-registry  # Anpassen falls anderer Namespace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mcp-registry
+  template:
+    metadata:
+      labels:
+        app: mcp-registry
+    spec:
+      containers:
+        - name: mcp-registry
+          # Anpassen: deine interne Registry + Image-Tag
+          image: your-registry.company.com/mcp-registry:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: MCP_REGISTRY_DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: mcp-registry-secret
+                  key: DATABASE_URL
+            - name: MCP_REGISTRY_JWT_PRIVATE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: mcp-registry-secret
+                  key: JWT_PRIVATE_KEY
+            - name: MCP_REGISTRY_SEED_FROM
+              value: /app/data/seed.json
+            - name: MCP_REGISTRY_ENABLE_REGISTRY_VALIDATION
+              value: "false"
+            - name: MCP_REGISTRY_ENABLE_ANONYMOUS_AUTH
+              value: "false"
+            - name: MCP_REGISTRY_ENVIRONMENT
+              value: production
+          volumeMounts:
+            - name: seed-data
+              mountPath: /app/data
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+      volumes:
+        - name: seed-data
+          configMap:
+            name: mcp-registry-seed

@@ -24,6 +24,9 @@ WORKDIR /app
 COPY --from=builder /app/bin/registry ./registry
 COPY --from=builder /app/data ./data
 
+RUN addgroup -S registry && adduser -S registry -G registry
+USER registry
+
 EXPOSE 8080
 
 CMD ["./registry"]

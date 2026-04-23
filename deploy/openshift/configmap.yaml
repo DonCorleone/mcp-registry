@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mcp-registry-seed
+  namespace: mcp-registry  # Anpassen falls anderer Namespace
+data:
+  seed.json: |
+    [
+      {
+        "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+        "name": "com.figma/figma",
+        "title": "Figma",
+        "description": "Official Figma MCP server. Provides access to Figma design files, components, and assets.",
+        "version": "1.0.0",
+        "remotes": [
+          {
+            "type": "streamable-http",
+            "url": "https://mcp.figma.com/mcp"
+          }
+        ]
+      }
+    ]
