@@ -17,6 +17,8 @@ services:
         value: "false"
       - key: MCP_REGISTRY_ENABLE_ANONYMOUS_AUTH
         value: "false"
+      - key: MCP_REGISTRY_JWT_PRIVATE_KEY
+        value: 120076954d81983a8410babca9dd959d4b29b7569236f184e424744727df5f08
 
 databases:
   - name: mcp-registry-db
